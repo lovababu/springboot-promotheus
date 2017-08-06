@@ -1,0 +1,51 @@
+group 'org.avol.promotheus'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.5.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'gs-spring-boot'
+    version =  version
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    // tag::jetty[]
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    // end::jetty[]
+    // tag::actuator[]
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    // end::actuator[]
+
+    // https://mvnrepository.com/artifact/io.prometheus/simpleclient_spring_boot
+    compile group: 'io.prometheus', name: 'simpleclient_spring_boot', version: '0.0.25'
+
+    // https://mvnrepository.com/artifact/io.prometheus/simpleclient_hotspot
+    compile group: 'io.prometheus', name: 'simpleclient_hotspot', version: '0.0.25'
+
+    // https://mvnrepository.com/artifact/io.prometheus/simpleclient_servlet
+    compile group: 'io.prometheus', name: 'simpleclient_servlet', version: '0.0.25'
+
+    testCompile("junit:junit")
+}
